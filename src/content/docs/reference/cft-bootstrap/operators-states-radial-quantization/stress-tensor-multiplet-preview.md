@@ -1,0 +1,437 @@
+---
+title: "Stress-Tensor Multiplet Preview"
+description: "Introduces the stress tensor as the universal conserved spin-two primary, its short conformal multiplet, and the CFT data it controls."
+sidebar:
+  label: "Stress Tensor Preview"
+  order: 10
+level: Graduate
+status: "Polished draft"
+source: "Di Francesco–Mathieu–Sénéchal 1997; Osborn and Petkou 1994; Rychkov 2017; Simmons-Duffin 2016; Poland–Rychkov–Vichi 2019"
+topics:
+  - stress tensor
+  - conformal multiplets
+  - Ward identities
+  - central charge
+  - conformal charges
+  - CFT data
+canonicalTopics:
+  - stress-tensor
+  - stress-tensor-conformal-multiplet
+  - stress-tensor-ward-identities
+  - central-charge-and-c-t
+  - conformal-charges
+researchStatus:
+  established:
+    - 'Every local CFT has a conserved stress tensor generating spacetime symmetries; in flat-space CFT it can be chosen traceless, up to improvement and anomaly subtleties.'
+    - 'For $d>2$, the stress tensor is a spin-two primary with $\Delta=d$, saturating the spin-two unitarity bound and producing a null divergence descendant.'
+  active:
+    - 'Stress-tensor constraints in spinning correlators, conformal collider bounds, defects, holography, and supersymmetric stress-tensor multiplets are developed in later pages.'
+---
+
+## Summary
+
+The stress tensor $T_{\mu\nu}$ is the universal local operator associated with spacetime symmetries. In a flat-space CFT it is symmetric, conserved, and traceless,
+
+$$
+T_{\mu\nu}=T_{\nu\mu},
+\qquad
+\partial^\mu T_{\mu\nu}=0,
+\qquad
+T^\mu{}_{\mu}=0,
+$$
+
+and for $d>2$ it is a spin-two primary with
+
+$$
+\Delta_T=d.
+$$
+
+This is exactly the spin-two unitarity-bound saturation value. Therefore the stress tensor belongs to a short conformal multiplet: the level-one divergence descendant is null.
+
+<figure class="doc-figure" style="--figure-width: 44rem;">
+
+![The stress tensor integrated against conformal Killing vectors generates translations, rotations, dilatations, and special conformal transformations.](/figures/cft-bootstrap/stress-tensor-conformal-charges.svg)
+
+<figcaption>
+
+The stress tensor produces conserved charges $Q_\xi=\int_S dS_\mu T^{\mu\nu}\xi_\nu$ whenever $\xi$ is a conformal Killing vector. The same local operator generates translations, rotations, dilatations, and special conformal transformations.
+
+</figcaption>
+</figure>
+
+This page is a preview because the stress tensor returns throughout the CFT volume: in Ward identities, central charges, conformal anomalies, conformal blocks, bootstrap bounds, two-dimensional Virasoro symmetry, conformal collider physics, and holography.
+
+## Prerequisites
+
+You should know [Conformal Killing Equation](/cft-bootstrap/conformal-symmetry/conformal-killing-equation/), [Conformal Generators](/cft-bootstrap/conformal-symmetry/conformal-generators/), [Conserved Currents and Short Multiplets](/cft-bootstrap/operators-states-radial-quantization/conserved-currents-and-short-multiplets/), and [Unitarity Bounds](/cft-bootstrap/operators-states-radial-quantization/unitarity-bounds/).
+
+This page uses Euclidean flat-space notation. Lorentzian signature changes signs and Hermiticity conventions, but not the local conservation or shortening statements.
+
+## Core idea
+
+The stress tensor is the current for translations. In a CFT, translations are only one part of a larger spacetime symmetry group. The same $T_{\mu\nu}$ generates every conformal transformation by integration against the appropriate conformal Killing vector.
+
+For a vector field $\xi^\mu(x)$, define
+
+$$
+j_\xi^\mu=T^{\mu\nu}\xi_\nu.
+$$
+
+If $\xi$ is a conformal Killing vector,
+
+$$
+\partial_\mu\xi_\nu+\partial_\nu\xi_\mu
+=
+\frac{2}{d}\delta_{\mu\nu}\partial\cdot\xi,
+$$
+
+then conservation and tracelessness imply
+
+$$
+\partial_\mu j_\xi^\mu=0.
+$$
+
+Thus the charges
+
+$$
+Q_\xi=\int_\Sigma dS_\mu\,T^{\mu\nu}\xi_\nu
+$$
+
+are conserved and can be moved by surface deformation, as long as the surface does not cross operator insertions.
+
+That is the main point: **the stress tensor packages conformal symmetry into one local operator**.
+
+## Setup and conventions
+
+We use the flat Euclidean metric $\delta_{\mu\nu}$. The stress tensor has scaling dimension $d$ and spin two. Its two-point normalization is conventionally written
+
+$$
+\langle T_{\mu\nu}(x)T_{\rho\sigma}(0)\rangle
+=
+\frac{C_T}{(x^2)^d}\,I_{\mu\nu,\rho\sigma}(x),
+$$
+
+where
+
+$$
+I_{\mu\nu}(x)=\delta_{\mu\nu}-2\frac{x_\mu x_\nu}{x^2},
+$$
+
+and
+
+$$
+I_{\mu\nu,\rho\sigma}(x)
+=
+\frac12\left(I_{\mu\rho}I_{\nu\sigma}+I_{\mu\sigma}I_{\nu\rho}\right)
+-\frac1d\delta_{\mu\nu}\delta_{\rho\sigma}.
+$$
+
+The coefficient $C_T$ is positive in a unitary CFT. Its numerical value depends on the normalization convention for $T_{\mu\nu}$, but once the Ward identity normalization is fixed, $C_T$ is a meaningful CFT datum.
+
+:::note[What “multiplet” means here]
+This page uses “stress-tensor multiplet” in the ordinary conformal sense: the conformal multiplet generated by $T_{\mu\nu}$ and its descendants. In a supersymmetric CFT, the stress tensor may sit inside a larger supermultiplet containing supercurrents and R-currents. That is a later, different use of the word multiplet.
+:::
+
+## Why the dimension is d
+
+There are two quick ways to see $\Delta_T=d$.
+
+First, translation charges are obtained by integrating the stress tensor over a codimension-one surface:
+
+$$
+P_\nu=\int_\Sigma dS_\mu\,T^\mu{}_\nu.
+$$
+
+The translation generator has mass dimension one. Since $dS_\mu$ has mass dimension $-(d-1)$, the stress tensor must have mass dimension
+
+$$
+\Delta_T=d.
+$$
+
+Second, a symmetric-traceless spin-two primary in a unitary $d\ge3$ CFT obeys
+
+$$
+\Delta\ge \ell+d-2=d.
+$$
+
+The stress tensor is conserved, so it saturates this bound. Saturation means
+
+$$
+P^\mu|T_{\mu\nu}\rangle=0,
+$$
+
+or equivalently
+
+$$
+\partial^\mu T_{\mu\nu}=0.
+$$
+
+Thus the physical conservation equation is also the shortening condition of the stress-tensor conformal multiplet.
+
+## Conformal charges from the stress tensor
+
+The conformal Killing vectors in flat space are generated by
+
+$$
+\xi^\mu(x)=a^\mu+\omega^\mu{}_{\nu}x^\nu+\lambda x^\mu+
+\left(2(b\cdot x)x^\mu-b^\mu x^2\right).
+$$
+
+The four terms produce the four familiar types of conformal charges:
+
+| Vector field | Charge | Generator |
+|---|---|---|
+| $a^\mu$ | $\int dS_\rho T^{\rho\mu}a_\mu$ | translations $P_\mu$ |
+| $\omega^\mu{}_{\nu}x^\nu$ | $\int dS_\rho T^{\rho\mu}\omega_{\mu\nu}x^\nu$ | rotations $M_{\mu\nu}$ |
+| $\lambda x^\mu$ | $\int dS_\rho T^{\rho\mu}x_\mu$ | dilatations $D$ |
+| $2(b\cdot x)x^\mu-b^\mu x^2$ | moment of $T$ quadratic in $x$ | special conformal generators $K_\mu$ |
+
+The conservation of these charges follows from
+
+$$
+\partial_\mu(T^{\mu\nu}\xi_\nu)
+=
+(\partial_\mu T^{\mu\nu})\xi_\nu+T^{\mu\nu}\partial_\mu\xi_\nu.
+$$
+
+The first term vanishes by stress-tensor conservation. In the second term, only the symmetric part of $\partial_\mu\xi_\nu$ contributes because $T^{\mu\nu}$ is symmetric. The conformal Killing equation gives
+
+$$
+T^{\mu\nu}\partial_\mu\xi_\nu
+=
+\frac{1}{d}T^\mu{}_{\mu}\partial\cdot\xi=0.
+$$
+
+The final zero is tracelessness. This is why scale and special conformal transformations require a traceless stress tensor, not merely a conserved one.
+
+## Stress tensor and Ward identities
+
+The stress tensor measures how correlation functions respond to local changes of the metric. Schematically,
+
+$$
+T_{\mu\nu}(x)
+\sim
+-\frac{2}{\sqrt g}\frac{\delta S}{\delta g^{\mu\nu}(x)},
+$$
+
+when a Lagrangian and metric coupling are available. More generally, $T_{\mu\nu}$ is characterized intrinsically by its Ward identities.
+
+The stress-tensor Ward identity says that inserting $\partial^\mu T_{\mu\nu}$ into a correlator gives contact terms that translate the other operators. Integrating over a small surface around one local operator gives the action of conformal generators on that operator.
+
+For a scalar primary $\mathcal O$ of dimension $\Delta$, the singular part of the $T\mathcal O$ OPE is fixed by conformal symmetry and the Ward identity. The detailed tensor expression depends on the normalization convention for $T_{\mu\nu}$, but its job is unambiguous:
+
+$$
+\int_{S^{d-1}} dS_\mu\,T^{\mu\nu}\xi_\nu\,\mathcal O(0)
+=
+\delta_\xi\mathcal O(0).
+$$
+
+This is why the three-point coefficient $\langle T\mathcal O\mathcal O\rangle$ is not arbitrary. Once $\mathcal O$ is normalized and $C_T$ is fixed, the Ward identity fixes the stress-tensor OPE coefficient in terms of $\Delta$ and spin data.
+
+## The stress-tensor conformal multiplet
+
+For $d>2$, the improved stress tensor is a spin-two primary:
+
+$$
+K_\rho|T_{\mu\nu}\rangle=0,
+\qquad
+D|T_{\mu\nu}\rangle=d|T_{\mu\nu}\rangle.
+$$
+
+Its descendants are generated by $P_\rho$:
+
+$$
+|T_{\mu\nu}\rangle,
+\qquad
+P_\rho|T_{\mu\nu}\rangle,
+\qquad
+P_\rho P_\sigma|T_{\mu\nu}\rangle,
+\qquad
+\ldots
+$$
+
+The conservation equation removes the divergence descendant,
+
+$$
+P^\mu|T_{\mu\nu}\rangle=0.
+$$
+
+That is the shortening. The remaining descendants represent derivatives of the stress tensor, organized into irreducible rotation representations after quotienting by the null states.
+
+This matters for conformal blocks. When $T_{\mu\nu}$ appears in an OPE, its contribution to a four-point function is not merely a single operator. It is the full stress-tensor conformal block: $T_{\mu\nu}$ plus all non-null descendants, with coefficients fixed by conformal symmetry.
+
+## Uniqueness and product theories
+
+In an ordinary connected local CFT, there is a unique total stress tensor: the one whose translation charge acts on every local operator by moving its position.
+
+If a theory is a direct product,
+
+$$
+\mathrm{CFT}=\mathrm{CFT}_A\otimes\mathrm{CFT}_B,
+$$
+
+then each factor has its own conserved stress tensor $T_A$ and $T_B$. The total stress tensor is
+
+$$
+T=T_A+T_B.
+$$
+
+There is also an orthogonal conserved spin-two operator, roughly a relative stress tensor. The presence of more than one conserved spin-two current is therefore not generic; it is a warning sign that the CFT may factorize into decoupled sectors. Bootstrap analyses often use this idea when interpreting spectra and gaps in the spin-two sector.
+
+## Two-dimensional caveat
+
+Two-dimensional CFT deserves separate treatment. In complex coordinates, the stress tensor decomposes into holomorphic and antiholomorphic components,
+
+$$
+T(z),
+\qquad
+\bar T(\bar z).
+$$
+
+These generate the Virasoro algebra. Because of the central charge, $T(z)$ is not a primary under arbitrary local conformal transformations; it has an anomalous Schwarzian transformation law. Under the global conformal subgroup it behaves as a quasi-primary of weight $2$.
+
+This is not a contradiction. It means the two-dimensional stress tensor is even more powerful than the higher-dimensional one. It belongs naturally to the Virasoro vacuum module, and its OPE with itself produces the central charge $c$.
+
+## Bootstrap role
+
+The stress tensor is unavoidable in any local CFT, so every bootstrap problem must make room for it. If a scalar $\phi$ appears in the theory, then the OPE $\phi\times\phi$ contains the stress tensor whenever symmetry permits. The coefficient of the stress-tensor block is tied to $\Delta_\phi$ and $C_T$.
+
+This makes $C_T$ a central observable in numerical and analytic bootstrap studies. Bounds on $C_T$, islands in parameter space, current and stress-tensor correlator bootstrap systems, and conformal collider inequalities all use the stress tensor as a universal handle on the theory.
+
+In holographic CFTs, $C_T$ controls the normalization of the bulk graviton kinetic term. In statistical CFTs, it measures a universal normalization of stress-tensor fluctuations. In two-dimensional CFTs, the analogous role is played by the central charge $c$, although the exact relation between $c$ and higher-dimensional central-charge conventions is convention-dependent.
+
+## Common pitfalls
+
+**Stress tensor is not optional.** A local CFT has a stress tensor. If a proposed operator spectrum has no conserved spin-two operator with the right Ward identity, it is not the spectrum of an ordinary local CFT.
+
+**Conservation is not the same as tracelessness.** Conservation generates translations. Tracelessness is what extends the charge construction to dilatations and special conformal transformations.
+
+**Primary has a two-dimensional caveat.** In $d>2$, the stress tensor is a primary after improvement. In 2D, the holomorphic stress tensor is better described as the generator of the Virasoro vacuum module and transforms with a central term under local conformal maps.
+
+**$C_T$ is convention-sensitive.** The statement $C_T>0$ is robust in a unitary CFT, but its numerical value must be compared only after matching the normalization of $T_{\mu\nu}$ and the two-point tensor structure.
+
+**A conserved spin-two operator need not be the total stress tensor.** Product CFTs can have additional conserved spin-two operators. The stress tensor is the one whose charge translates all local operators in the full theory.
+
+## Relations to other pages
+
+[Conserved Currents and Short Multiplets](/cft-bootstrap/operators-states-radial-quantization/conserved-currents-and-short-multiplets/) explains the general shortening mechanism. [Conformal Ward Identities](/cft-bootstrap/conformal-symmetry/conformal-ward-identities/) explains how current insertions produce symmetry constraints on correlators.
+
+The detailed stress-tensor two- and three-point structures belong to [Stress-Tensor Correlators](/cft-bootstrap/correlation-functions/stress-tensor-correlators/). The OPE viewpoint belongs to [Stress Tensor OPE](/cft-bootstrap/operator-product-expansion/stress-tensor-ope/). The two-dimensional story continues in [Stress Tensor in 2D](/cft-bootstrap/two-dimensional-cft/stress-tensor-in-2d/) and [Virasoro Symmetry and Central Charge](/cft-bootstrap/virasoro-central-charge/).
+
+For holography, the stress tensor becomes the operator dual to the graviton; see [Stress Tensor and Bulk Gravity](/cft-bootstrap/holographic-cft/stress-tensor-and-bulk-gravity/).
+
+## Research status
+
+The existence, conservation, Ward identities, and conformal multiplet shortening of the stress tensor are standard CFT structure. The two-point normalization $C_T$ and the stress-tensor OPE are standard pieces of CFT data.
+
+Active directions include stress-tensor bootstrap systems, numerical bounds on $C_T$, conformal collider and averaged-energy constraints, stress tensors in defect and boundary CFTs, stress-tensor data in holographic theories, and supersymmetric stress-tensor multiplets.
+
+## Exercises
+
+### Exercise 1
+
+Let $T_{\mu\nu}$ be symmetric, conserved, and traceless. Show that
+
+$$
+j_\xi^\mu=T^{\mu\nu}\xi_\nu
+$$
+
+is conserved whenever $\xi$ obeys the conformal Killing equation.
+
+<details>
+<summary><strong>Solution</strong></summary>
+
+Compute
+
+$$
+\partial_\mu j_\xi^\mu
+=
+(\partial_\mu T^{\mu\nu})\xi_\nu+T^{\mu\nu}\partial_\mu\xi_\nu.
+$$
+
+The first term vanishes by conservation. Since $T^{\mu\nu}$ is symmetric, only the symmetric part of $\partial_\mu\xi_\nu$ contributes:
+
+$$
+T^{\mu\nu}\partial_\mu\xi_\nu
+=
+\frac12T^{\mu\nu}(\partial_\mu\xi_\nu+\partial_\nu\xi_\mu).
+$$
+
+Using the conformal Killing equation,
+
+$$
+\partial_\mu\xi_\nu+\partial_\nu\xi_\mu
+=
+\frac{2}{d}\delta_{\mu\nu}\partial\cdot\xi,
+$$
+
+we get
+
+$$
+\partial_\mu j_\xi^\mu
+=
+\frac1d T^\mu{}_{\mu}\partial\cdot\xi=0.
+$$
+
+The last equality uses tracelessness.
+
+</details>
+
+### Exercise 2
+
+Use the translation charge
+
+$$
+P_\nu=\int_\Sigma dS_\mu\,T^\mu{}_{\nu}
+$$
+
+to check that $\Delta_T=d$.
+
+<details>
+<summary><strong>Solution</strong></summary>
+
+The generator $P_\nu$ has scaling dimension one because it differentiates with respect to position. The surface measure has mass dimension $-(d-1)$. If $T_{\mu\nu}$ has scaling dimension $\Delta_T$, then
+
+$$
+[P_\nu]=\Delta_T-(d-1).
+$$
+
+Setting this equal to $1$ gives
+
+$$
+\Delta_T=d.
+$$
+
+This is also the spin-two unitarity-bound saturation value.
+
+</details>
+
+### Exercise 3
+
+Consider a product CFT, $\mathrm{CFT}_A\otimes\mathrm{CFT}_B$, with stress tensors $T_A$ and $T_B$. Which linear combination is the total stress tensor?
+
+<details>
+<summary><strong>Solution</strong></summary>
+
+The total stress tensor is
+
+$$
+T=T_A+T_B.
+$$
+
+Its translation charge acts on operators in both factors. For example, if $\mathcal O_A$ belongs to $\mathrm{CFT}_A$ and $\mathcal O_B$ belongs to $\mathrm{CFT}_B$, then the total translation generator must move both insertions. A relative combination, such as a normalization-adjusted version of $T_A-T_B$, is also conserved, but it does not generate the diagonal translations of the full product theory. It is an additional spin-two conserved operator rather than the total stress tensor.
+
+</details>
+
+## References
+
+- Di Francesco, Mathieu, and Sénéchal, *Conformal Field Theory*, chapters 4–6.
+- Osborn and Petkou, “Implications of conformal invariance in field theories for general dimensions.”
+- Rychkov, *EPFL Lectures on Conformal Field Theory in D ≥ 3 Dimensions*.
+- Simmons-Duffin, “TASI Lectures on the Conformal Bootstrap.”
+- Poland, Rychkov, and Vichi, “The Conformal Bootstrap: Theory, Numerical Techniques, and Applications.”
+- Hofman and Maldacena, “Conformal collider physics: Energy and charge correlations.”
+
+## Version history
+
+- 2026-06-27: First polished version.
