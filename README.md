@@ -1,49 +1,55 @@
-# Starlight Starter Kit: Basics
+I have a large Starlight documentation site with many Markdown/MDX docs containing heavy KaTeX/math content.
 
-[![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
+The build runs out of memory during Astro’s content sync phase, before page generation starts.
+
+The reproduction repo is https://github.com/integrable/astrov7/
+
+The failure happens after:
+
+[content] Syncing content
+
+and then Node/V8 eventually aborts with:
+
+FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
+
+This appears to be a scalability issue in Astro’s content layer for renderable Markdown/MDX entries. My current understanding is that Astro’s glob() content loader eagerly renders Markdown/MDX entries and stores the rendered output in the global content data store. For Starlight docs pages with heavy KaTeX, the rendered HTML is much larger than the source Markdown, so syncing content can consume several GB of heap and eventually crash.
+
+The KaTeX warnings printed before the crash do not seem to be the direct cause; they are warnings, and the process continues until memory is exhausted.
+
+Steps to Reproduce:
 
 ```
-npm create astro@latest -- --template starlight
+git clone https://github.com/integrable/astrov7.git
+cd astrov7
+npm ci
+rm -rf .astro dist node_modules/.astro
+npm run build
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Actual Result:
 
-## 🚀 Project Structure
+The build starts syncing content:
 
-Inside of your Astro + Starlight project, you'll see the following folders and files:
+15:52:45 [content] Syncing content
 
-```
-.
-├── public/
-├── src/
-│   ├── assets/
-│   ├── content/
-│   │   └── docs/
-│   └── content.config.ts
-├── astro.config.mjs
-├── package.json
-└── tsconfig.json
-```
+Then several KaTeX warnings are printed, for example:
 
-Starlight looks for `.md` or `.mdx` files in the `src/content/docs/` directory. Each file is exposed as a route based on its file name.
+LaTeX-incompatible input and strict mode is set to 'warn': In LaTeX, \ or \newline does nothing in display mode [newLineInDisplayMode]
 
-Images can be added to `src/assets/` and embedded in Markdown with a relative link.
+After several minutes, Node runs out of memory:
 
-Static assets, like favicons, can be placed in the `public/` directory.
+<--- Last few GCs --->
 
-## 🧞 Commands
+[93872:0x8b540c000] 178849 ms: Scavenge (interleaved) 4093.3 (4108.7) -> 4093.1 (4109.7) MB, pooled: 0 MB, 3.96 / 0.00 ms (average mu = 0.288, current mu = 0.234) allocation failure;
+[93872:0x8b540c000] 179724 ms: Mark-Compact (reduce) 4094.0 (4109.7) -> 4093.9 (4108.2) MB, pooled: 0 MB, 630.04 / 0.00 ms (+ 9.1 ms in 14 steps since start of marking, biggest step 5.0 ms, walltime since start of marking 647 ms) (average mu = 0.286, c
+FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
 
-All commands are run from the root of the project, from a terminal:
+zsh: abort npm run build
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+Related issue:
 
-## 👀 Want to learn more?
+This is related to, but different from, the previous large content-store dev issue:
 
-Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
+#17220
+
+That issue was about dev mode returning empty collections when importing a large content data-store virtual module. This report is about build/content sync exhausting memory before page generation because the content store becomes too large when rendered Markdown/KaTeX output is eagerly retained.
