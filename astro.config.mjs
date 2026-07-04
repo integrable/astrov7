@@ -17,6 +17,7 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'My Docs',
+			customCss: ['./src/styles/katex.css'],
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
 			sidebar: [
 				{
