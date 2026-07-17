@@ -1,3 +1,42 @@
+The purpose of this repo is to provide a minimal reproducible example for the issue [#17301](https://github.com/withastro/astro/issues/17301). It has now been fixed in [Astro v7.1.0](https://github.com/withastro/astro/releases/tag/astro%407.1.0).
+
+To apply the new `deferRender` option for an Astro/Starlight website, we need to update the file `src/content.config.ts` to
+
+```
+// src/content.config.ts
+import { defineCollection } from 'astro:content';
+import { glob } from 'astro/loaders';
+import { docsSchema } from '@astrojs/starlight/schema';
+
+export const collections = {
+	docs: defineCollection({
+		loader: glob({
+			base: './src/content/docs',
+			pattern: '**/[^_]*.{markdown,mdown,mkdn,mkd,mdwn,md,mdx}',
+			deferRender: true,
+		}),
+		schema: docsSchema(),
+	}),
+};
+```
+
+from the original
+
+```
+// src/content.config.ts
+import { defineCollection } from 'astro:content';
+import { docsLoader } from '@astrojs/starlight/loaders';
+import { docsSchema } from '@astrojs/starlight/schema';
+
+export const collections = {
+	docs: defineCollection({ loader: docsLoader(), schema: docsSchema() }),
+};
+```
+
+With the above option turned on, `npm run dev` takes significantly less time.
+
+---
+
 I have a large Starlight documentation site with many Markdown/MDX docs containing heavy KaTeX/math content.
 
 The build runs out of memory during Astro’s content sync phase, before page generation starts. The failure happens after:
